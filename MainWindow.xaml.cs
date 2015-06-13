@@ -138,10 +138,17 @@ namespace FutureCloth
 
                                if (head.TrackingState == TrackingState.Tracked && neck.TrackingState == TrackingState.Tracked)
                                {
+                                  //cameraspacepoints
                                    CameraSpacePoint headPt = head.Position;
                                    CameraSpacePoint neckPt = neck.Position;
+                                   CameraSpacePoint handLPt = leftHand.Position;
+                                   CameraSpacePoint handRPt = rightHand.Position; 
+
+                                   //Points
                                    Point headPoint = new Point();
                                    Point neckPoint = new Point();
+                                   Point handLPoint = new Point();
+                                   Point handRPoint = new Point();
 
 
                                    //ColorSpacePoint colorPoint = _sensor.CoordinateMapper.MapCameraPointToColorSpace(pt);
@@ -150,8 +157,8 @@ namespace FutureCloth
 
                                    headPoint.X = float.IsInfinity(depthHead.X) ? 0 : depthHead.X;
                                    headPoint.Y = float.IsInfinity(depthHead.Y) ? 0 : depthHead.Y;
-                                   neckPoint.X = float.IsInfinity(colorPoint1.X) ? 0 : colorPoint1.X;
-                                   neckPoint.Y = float.IsInfinity(colorPoint1.Y) ? 0 : colorPoint1.Y;
+                                   neckPoint.X = float.IsInfinity(depthPoint.X) ? 0 : depthPoint.X;
+                                   neckPoint.Y = float.IsInfinity(depthPoint.Y) ? 0 : depthPoint.Y;
 
                                    
                                    Ellipse headcircle = new Ellipse
@@ -161,8 +168,8 @@ namespace FutureCloth
                                        Stroke = new SolidColorBrush(Colors.Red),
                                        StrokeThickness = 2
                                    };
-                                   Canvas.SetLeft(headcircle, (point.X) - headcircle.Width / 2);
-                                   Canvas.SetTop(headcircle, (point.Y) - headcircle.Height / 2);
+                                   Canvas.SetLeft(headcircle, (headPoint.X) - headcircle.Width / 2);
+                                   Canvas.SetTop(headcircle, (headPoint.Y) - headcircle.Height / 2);
                                    canvas.Children.Add(headcircle);
 
                                    Ellipse neckcircle = new Ellipse
@@ -172,16 +179,16 @@ namespace FutureCloth
                                        Stroke = new SolidColorBrush(Colors.Red),
                                        StrokeThickness = 2
                                    };
-                                   Canvas.SetLeft(neckcircle, (point1.X) - neckcircle.Width / 2);
-                                   Canvas.SetTop(neckcircle, (point1.Y) - neckcircle.Height / 2);
+                                   Canvas.SetLeft(neckcircle, (neckPoint.X) - neckcircle.Width / 2);
+                                   Canvas.SetTop(neckcircle, (neckPoint.Y) - neckcircle.Height / 2);
                                    canvas.Children.Add(neckcircle);
 
                                    Line headneck = new Line
                                    {
-                                       X1 = point.X,
-                                       Y1 = point.Y,
-                                       X2 = point1.X,
-                                       Y2 = point1.Y,
+                                       X1 = headPoint.X,
+                                       Y1 = heahPoint.Y,
+                                       X2 = neckPoint.X,
+                                       Y2 = neckPoint.Y,
                                        StrokeThickness = 5,
                                        Stroke = new SolidColorBrush(Colors.Red)
                                    };
