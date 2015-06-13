@@ -157,8 +157,8 @@ namespace FutureCloth
 
                                    headPoint.X = float.IsInfinity(depthHead.X) ? 0 : depthHead.X;
                                    headPoint.Y = float.IsInfinity(depthHead.Y) ? 0 : depthHead.Y;
-                                   neckPoint.X = float.IsInfinity(depthPoint.X) ? 0 : depthPoint.X;
-                                   neckPoint.Y = float.IsInfinity(depthPoint.Y) ? 0 : depthPoint.Y;
+                                   neckPoint.X = float.IsInfinity(depthNeck.X) ? 0 : depthNeck.X;
+                                   neckPoint.Y = float.IsInfinity(depthNeck.Y) ? 0 : depthNeck.Y;
 
                                    
                                    Ellipse headcircle = new Ellipse
@@ -186,7 +186,7 @@ namespace FutureCloth
                                    Line headneck = new Line
                                    {
                                        X1 = headPoint.X,
-                                       Y1 = heahPoint.Y,
+                                       Y1 = headPoint.Y,
                                        X2 = neckPoint.X,
                                        Y2 = neckPoint.Y,
                                        StrokeThickness = 5,
