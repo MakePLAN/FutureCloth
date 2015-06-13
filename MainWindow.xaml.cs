@@ -94,19 +94,28 @@ namespace FutureCloth
            var bodyIndexFrame = reference.BodyIndexFrameReference.AcquireFrame();
            var bodyFrame = reference.BodyFrameReference.AcquireFrame();
 
+           if (colorFrame != null)
+           {
+               camera1.Source = colorFrame.ToBitmap();
 
-            if (colorFrame != null && depthFrame != null && bodyIndexFrame != null)
-          
-            {
-               
-                camera.Source = _backgroundRemoval.GreenScreen(colorFrame, depthFrame, bodyIndexFrame);
-                
-                colorFrame.Dispose();
-                depthFrame.Dispose();
-                bodyIndexFrame.Dispose();
-                
-                
-            }
+               if (colorFrame != null && depthFrame != null && bodyIndexFrame != null)
+               {
+
+                   camera.Source = _backgroundRemoval.GreenScreen(colorFrame, depthFrame, bodyIndexFrame);
+
+
+                   //camera1.Source = colorFrame.ToBitmap();
+
+                   
+                   depthFrame.Dispose();
+                   bodyIndexFrame.Dispose();
+
+
+               }
+               colorFrame.Dispose();
+           }
+
+            
               
 
            
@@ -160,7 +169,7 @@ namespace FutureCloth
                                    neckPoint.X = float.IsInfinity(depthNeck.X) ? 0 : depthNeck.X;
                                    neckPoint.Y = float.IsInfinity(depthNeck.Y) ? 0 : depthNeck.Y;
 
-                                   
+                                   /*
                                    Ellipse headcircle = new Ellipse
                                    {
                                        Width = 20,
@@ -170,7 +179,20 @@ namespace FutureCloth
                                    };
                                    Canvas.SetLeft(headcircle, (headPoint.X) - headcircle.Width / 2);
                                    Canvas.SetTop(headcircle, (headPoint.Y) - headcircle.Height / 2);
-                                   canvas.Children.Add(headcircle);
+                                   //canvas.Children.Add(headcircle);
+                                    */
+
+                                   Rectangle headbox = new Rectangle
+                                   {
+                                       Width = 45,
+                                       Height = 50,
+                                       Stroke = new SolidColorBrush(Colors.Red),
+                                       StrokeThickness = 2
+                                       
+                                   };
+                                   Canvas.SetLeft(headbox, (headPoint.X) - headbox.Width / 2);
+                                   Canvas.SetTop(headbox, (headPoint.Y) - headbox.Height / 2);
+                                   canvas.Children.Add(headbox);
 
                                    Ellipse neckcircle = new Ellipse
                                    {
@@ -181,7 +203,7 @@ namespace FutureCloth
                                    };
                                    Canvas.SetLeft(neckcircle, (neckPoint.X) - neckcircle.Width / 2);
                                    Canvas.SetTop(neckcircle, (neckPoint.Y) - neckcircle.Height / 2);
-                                   canvas.Children.Add(neckcircle);
+                                   //canvas.Children.Add(neckcircle);
 
                                    Line headneck = new Line
                                    {
@@ -192,7 +214,7 @@ namespace FutureCloth
                                        StrokeThickness = 5,
                                        Stroke = new SolidColorBrush(Colors.Red)
                                    };
-                                   canvas.Children.Add(headneck);
+                                   //canvas.Children.Add(headneck);
 
                                }
                            }

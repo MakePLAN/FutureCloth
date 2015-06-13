@@ -4,16 +4,18 @@
         Title="Future Clothing System" Height="800" Width="1400" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid Background="Gold">
         <Viewbox Margin="568,94,0,0.5">
-            <Grid Width="512" Height="424" Background="LightBlue">
+            <Grid Width="512" Height="424" Background="White">
                 <Image Name="camera" />
                 <Canvas Name="canvas" />
             </Grid>
         </Viewbox>
         <Label Content="Cloth Testing" HorizontalAlignment="Left" Height="79" Margin="567,10,0,0" VerticalAlignment="Top" Width="273" FontSize="40" FontWeight="Bold"/>
-        <Grid HorizontalAlignment="Left" Height="668" Margin="10,94,0,0" VerticalAlignment="Top" Width="553">
-            <Image Name="oldPic" HorizontalAlignment="Left" Height="281" Margin="110,29,0,0" VerticalAlignment="Top" Width="333" Loaded="Image_Loaded" Source="shirt.jpg"/>
-            <Image Name="newPic" HorizontalAlignment="Left" Height="281" Margin="110,339,0,0" VerticalAlignment="Top" Width="333"/>
-        </Grid>
+        <Viewbox HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top" Height="459" Width="553">
+            <Grid Height="1080" Width="1920">
+                <Image Name="camera1" />
+            </Grid>
+        </Viewbox>
+
 
     </Grid>
 </Window>
