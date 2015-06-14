@@ -30,6 +30,9 @@ namespace FutureCloth
         private CoordinateMapper coordinateMapper = null;
         BackgroundRemoval _backgroundRemoval;
         ulong player = 0;
+        byte[] colordata = null;
+        int widthMask = 60;
+        int lengthMask = 65; 
 
         #endregion
 
@@ -96,12 +99,12 @@ namespace FutureCloth
 
            if (colorFrame != null)
            {
-               camera1.Source = colorFrame.ToBitmap();
+               //camera1.Source = colorFrame.ToBitmap();
 
                if (colorFrame != null && depthFrame != null && bodyIndexFrame != null)
                {
 
-                   camera.Source = _backgroundRemoval.GreenScreen(colorFrame, depthFrame, bodyIndexFrame);
+                   //camera.Source = _backgroundRemoval.GreenScreen(colorFrame, depthFrame, bodyIndexFrame);
 
 
                    //camera1.Source = colorFrame.ToBitmap();
@@ -112,8 +115,8 @@ namespace FutureCloth
 
 
                }
-               colorFrame.Dispose();
-           }
+               //colorFrame.Dispose();
+           
 
             
               
@@ -142,79 +145,150 @@ namespace FutureCloth
                                //Joints
                                Joint head = body.Joints[JointType.Head];
                                Joint neck = body.Joints[JointType.Neck];
-                               Joint leftHand = body.Joints[JointType.HandLeft];
-                               Joint rightHand = body.Joints[JointType.HandRight];
+                               
+                               Joint spineMid = body.Joints[JointType.SpineMid];
+                               Joint spineBase = body.Joints[JointType.SpineBase];
+                               Joint spineShoulder = body.Joints[JointType.SpineShoulder];
+                               Joint leftShoulder = body.Joints[JointType.ShoulderLeft];
+                               Joint rightShoulder = body.Joints[JointType.ShoulderRight];
 
-                               if (head.TrackingState == TrackingState.Tracked && neck.TrackingState == TrackingState.Tracked)
+                               if (head.TrackingState == TrackingState.Tracked && neck.TrackingState == TrackingState.Tracked && spineMid.TrackingState == TrackingState.Tracked && spineBase.TrackingState == TrackingState.Tracked && spineShoulder.TrackingState == TrackingState.Tracked && leftShoulder.TrackingState == TrackingState.Tracked && rightShoulder.TrackingState == TrackingState.Tracked)
                                {
+                                   int colorWidth = colorFrame.FrameDescription.Width;
+                                   int colorHeight = colorFrame.FrameDescription.Height;
+
+                                   colordata = new byte[colorWidth * colorHeight * ((PixelFormats.Bgr32.BitsPerPixel + 7)/8)  ];
+                                   if ((colorWidth * colorHeight * ((PixelFormats.Bgr32.BitsPerPixel + 7)/8)) == colordata.Length) 
+                                    {
+
+                                        if (colorFrame.RawColorImageFormat == ColorImageFormat.Bgra)
+                                        {
+                                            colorFrame.CopyRawFrameDataToArray(colordata);
+                                        }
+                                        else
+                                        {
+                                            colorFrame.CopyConvertedFrameDataToArray(colordata, ColorImageFormat.Bgra);
+                                        }
+                                   }
                                   //cameraspacepoints
                                    CameraSpacePoint headPt = head.Position;
                                    CameraSpacePoint neckPt = neck.Position;
-                                   CameraSpacePoint handLPt = leftHand.Position;
-                                   CameraSpacePoint handRPt = rightHand.Position; 
+                                   CameraSpacePoint midSpinePt = spineMid.Position;
+                                   CameraSpacePoint baseSpinePt = spineBase.Position;
+                                   CameraSpacePoint shoulderSpinePt = spineShoulder.Position;
+                                   CameraSpacePoint leftShoulderPt = leftShoulder.Position;
+                                   CameraSpacePoint rightShoulderPt = rightShoulder.Position;
 
                                    //Points
                                    Point headPoint = new Point();
                                    Point neckPoint = new Point();
-                                   Point handLPoint = new Point();
-                                   Point handRPoint = new Point();
+                                   Point midSpinePoint = new Point();
+                                   Point baseSpinePoint = new Point();
+                                   Point shoulderSpinePoint = new Point();
+                                   Point leftShoulderPoint = new Point();
+                                   Point rightShoulderPoint = new Point();
 
 
                                    //ColorSpacePoint colorPoint = _sensor.CoordinateMapper.MapCameraPointToColorSpace(pt);
                                    DepthSpacePoint depthHead = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(headPt);
                                    DepthSpacePoint depthNeck = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(neckPt);
+                                   DepthSpacePoint depthSpineMid = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(midSpinePt);
+                                   DepthSpacePoint depthSpineBase = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(baseSpinePt);
+                                   DepthSpacePoint depthSpineShoulder = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(shoulderSpinePt);
+                                   DepthSpacePoint depthLeftShoulder = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(leftShoulderPt);
+                                   DepthSpacePoint depthRightShoulder = _sensor.CoordinateMapper.MapCameraPointToDepthSpace(rightShoulderPt);
 
                                    headPoint.X = float.IsInfinity(depthHead.X) ? 0 : depthHead.X;
                                    headPoint.Y = float.IsInfinity(depthHead.Y) ? 0 : depthHead.Y;
                                    neckPoint.X = float.IsInfinity(depthNeck.X) ? 0 : depthNeck.X;
                                    neckPoint.Y = float.IsInfinity(depthNeck.Y) ? 0 : depthNeck.Y;
+                                   midSpinePoint.X = float.IsInfinity(depthSpineMid.X) ? 0 : depthSpineMid.X;
+                                   midSpinePoint.Y = float.IsInfinity(depthSpineMid.Y) ? 0 : depthSpineMid.Y;
+                                   baseSpinePoint.X = float.IsInfinity(depthSpineBase.X) ? 0 : depthSpineBase.X;
+                                   baseSpinePoint.Y = float.IsInfinity(depthSpineBase.Y) ? 0 : depthSpineBase.Y;
+                                   shoulderSpinePoint.X = float.IsInfinity(depthSpineShoulder.X) ? 0 : depthSpineShoulder.X;
+                                   shoulderSpinePoint.Y = float.IsInfinity(depthSpineShoulder.Y) ? 0 : depthSpineShoulder.Y;
+                                   leftShoulderPoint.X = float.IsInfinity(depthLeftShoulder.X) ? 0 : depthLeftShoulder.X;
+                                   leftShoulderPoint.Y = float.IsInfinity(depthLeftShoulder.Y) ? 0 : depthLeftShoulder.Y;
+                                   rightShoulderPoint.X = float.IsInfinity(depthRightShoulder.X) ? 0 : depthRightShoulder.X;
+                                   rightShoulderPoint.Y = float.IsInfinity(depthRightShoulder.Y) ? 0 : depthRightShoulder.Y;
 
-                                   /*
-                                   Ellipse headcircle = new Ellipse
-                                   {
-                                       Width = 20,
-                                       Height = 20,
-                                       Stroke = new SolidColorBrush(Colors.Red),
-                                       StrokeThickness = 2
-                                   };
-                                   Canvas.SetLeft(headcircle, (headPoint.X) - headcircle.Width / 2);
-                                   Canvas.SetTop(headcircle, (headPoint.Y) - headcircle.Height / 2);
-                                   //canvas.Children.Add(headcircle);
-                                    */
+                                   BitmapImage image = new BitmapImage();
+                                   image.BeginInit();
+                                   image.UriSource = new Uri("jason.png", UriKind.RelativeOrAbsolute);
+                                   image.EndInit();
+                                   ImageBrush myImageBrush = new ImageBrush(image);
+                                   Canvas myCanvas = new Canvas();
+                                   myCanvas.Width = widthMask;
+                                   myCanvas.Height = lengthMask;
+                                   myCanvas.Background = myImageBrush;
+                                   Canvas.SetLeft(myCanvas, (headPoint.X) - myCanvas.Width / 2);
+                                   Canvas.SetTop(myCanvas, (headPoint.Y) - 5 - (myCanvas.Height) / 2);
+                                   canvas.Children.Add(myCanvas);
+                                   
+                                   widthMask = (int)(rightShoulderPoint.X - leftShoulderPoint.X) * 8 / 10;
+                                   lengthMask = (int)(rightShoulderPoint.X - leftShoulderPoint.X) * 8 / 10;
 
-                                   Rectangle headbox = new Rectangle
-                                   {
-                                       Width = 45,
-                                       Height = 50,
-                                       Stroke = new SolidColorBrush(Colors.Red),
-                                       StrokeThickness = 2
-                                       
-                                   };
-                                   Canvas.SetLeft(headbox, (headPoint.X) - headbox.Width / 2);
-                                   Canvas.SetTop(headbox, (headPoint.Y) - headbox.Height / 2);
-                                   canvas.Children.Add(headbox);
+                                   //this.number.Content = difference.ToString();
+                                   double headSpine = headPoint.X - midSpinePoint.X;
+                                   //head tilting
+                                   canvas.RenderTransform = new RotateTransform(120 * (headSpine) / 80, headPoint.X, headPoint.Y);
+                                   
 
-                                   Ellipse neckcircle = new Ellipse
-                                   {
-                                       Width = 20,
-                                       Height = 20,
-                                       Stroke = new SolidColorBrush(Colors.Red),
-                                       StrokeThickness = 2
-                                   };
-                                   Canvas.SetLeft(neckcircle, (neckPoint.X) - neckcircle.Width / 2);
-                                   Canvas.SetTop(neckcircle, (neckPoint.Y) - neckcircle.Height / 2);
-                                   //canvas.Children.Add(neckcircle);
+                                   int[] A;
+                                   A = new int[25];
+                                   int[] B;
+                                   B = new int[25];
+                                   int[] C;
+                                   C = new int[25];
+                                   int[] D;
+                                   D = new int[25];
 
-                                   Line headneck = new Line
+                                   for (int i = 0; i < 5; i++)
                                    {
-                                       X1 = headPoint.X,
-                                       Y1 = headPoint.Y,
-                                       X2 = neckPoint.X,
-                                       Y2 = neckPoint.Y,
-                                       StrokeThickness = 5,
-                                       Stroke = new SolidColorBrush(Colors.Red)
-                                   };
-                                   //canvas.Children.Add(headneck);
+                                       for (int j = 0; j < 5; j++)
+                                       {
+                                           A[i + 5 * j] = colordata[4*((int)(midSpinePoint.X*4-10+5*i)+colorWidth*(int)((midSpinePoint.Y*2)-10+5*i))];
+                                           B[i + 5 * j] = colordata[4 * ((int)(midSpinePoint.X*4 - 10 + 5 * i) + colorWidth * (int)((midSpinePoint.Y*2) - 10 + 5 * i))+1];
+                                           C[i + 5 * j] = colordata[4 * ((int)(midSpinePoint.X*4 - 10 + 5 * i) + colorWidth * (int)((midSpinePoint.Y*2) - 10 + 5 * i))+2];
+                                           D[i + 5 * j] = colordata[4 * ((int)(midSpinePoint.X*4 - 10 + 5 * i) + colorWidth * (int)((midSpinePoint.Y*2) - 10 + 5 * i))+3];
+                                       }
+                                   }
+
+                                   for (int x = (int)(midSpinePoint.X*4- baseSpinePoint.Y*2 + shoulderSpinePoint.Y*2); x < (midSpinePoint.X*4 + baseSpinePoint.Y*2 - shoulderSpinePoint.Y*2); x++)
+                                   {
+                                       for (int y = (int)(shoulderSpinePoint.Y -10)*2; y < (baseSpinePoint.Y + 10)*3; y++)
+                                       {
+                                           if (4 * (x + colorWidth * y) > (colorWidth * colorHeight * ((PixelFormats.Bgr32.BitsPerPixel + 7) / 8)))
+                                           {
+                                               continue;
+                                           }
+                                           int colorA = colordata[4 * (x + colorWidth * y)];
+                                           int colorB = colordata[4 * (x + colorWidth * y)+1];
+                                           int colorC = colordata[4 * (x + colorWidth * y)+2];
+                                           int colorD = colordata[4 * (x + colorWidth * y)+3];
+
+                                           for (int i = 0; i < 25; i++)
+                                           {
+                                               if ((A[i] >= colorA-10)&&(A[i] <= colorA+10)&&(B[i] >= colorB-10)&&(B[i] <= colorB+10)&&(C[i] >= colorC-10)&&(C[i] <= colorC+10)&&(D[i] >= colorD-10)&&(D[i] <= colorD+10))
+                                               {
+                                                   colordata[4 * (x + colorWidth * y)] = 0x99;
+                                                   colordata[4 * (x + colorWidth * y)] = 0x99;
+                                                   colordata[4 * (x + colorWidth * y)] = 0x99;
+                                                   colordata[4 * (x + colorWidth * y)] = 0xff;
+                                                   break;
+                                               }
+                                           }
+                                       }
+                                   }
+
+                                   int stride = colorWidth * PixelFormats.Bgr32.BitsPerPixel / 8;
+
+                                   //camera1.Source = colorFrame.ToBitmap();
+                                   camera1.Source = BitmapSource.Create(colorWidth, colorHeight, 96, 96, PixelFormats.Bgr32, null, colordata, stride);
+                                   colorFrame.Dispose();
+
+                                   
 
                                }
                            }
@@ -222,9 +296,9 @@ namespace FutureCloth
                    }
                    bodyFrame.Dispose();
                }
-               
-           
 
+               colorFrame.Dispose();
+            }
         }
 
 
