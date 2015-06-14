@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Future Clothing System" Height="800" Width="1400" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid Background="Gold">
-        <Viewbox Margin="568,94,0,0.5">
+        <Viewbox Margin="774,89,34,212.5">
             <Grid Width="512" Height="424" Background="White">
                 <Image Name="camera" />
                 <Canvas Name="canvas" />
             </Grid>
         </Viewbox>
         <Label Content="Cloth Testing" HorizontalAlignment="Left" Height="79" Margin="567,10,0,0" VerticalAlignment="Top" Width="273" FontSize="40" FontWeight="Bold"/>
-        <Viewbox HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top" Height="459" Width="553">
+        <Viewbox HorizontalAlignment="Left" Margin="126,101,0,0" VerticalAlignment="Top" Height="459" Width="553">
             <Grid Height="1080" Width="1920">
                 <Image Name="camera1" />
+                <Canvas Name="canvas1"/>
             </Grid>
         </Viewbox>
 

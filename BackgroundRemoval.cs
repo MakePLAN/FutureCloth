@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
@@ -75,6 +75,9 @@ namespace FutureCloth
         /// </summary>
         CoordinateMapper _coordinateMapper = null;
 
+        KinectSensor _sensor = null;
+        
+
         #endregion
 
         #region Constructor
@@ -83,9 +86,12 @@ namespace FutureCloth
         /// Creates a new instance of BackgroundRemovalTool.
         /// </summary>
         /// <param name="mapper">The coordinate mapper used for the background removal.</param>
-        public BackgroundRemoval(CoordinateMapper mapper)
+        public BackgroundRemoval(CoordinateMapper mapper, KinectSensor sensor1)
         {
             _coordinateMapper = mapper;
+            _sensor = sensor1;
+
+            
         }
 
         #endregion
@@ -168,6 +174,8 @@ namespace FutureCloth
                     }
                 }
 
+
+
                 _bitmap.Lock();
 
                 Marshal.Copy(_displayPixels, 0, _bitmap.BackBuffer, _displayPixels.Length);
@@ -175,7 +183,7 @@ namespace FutureCloth
 
                 _bitmap.Unlock();
             }
-
+            
             return _bitmap;
         }
 

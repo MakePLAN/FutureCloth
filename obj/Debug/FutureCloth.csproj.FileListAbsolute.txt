@@ -42,3 +42,18 @@ C:\Users\zw\Documents\GitHub\FutureCloth\obj\Debug\FutureCloth_MarkupCompile.cac
 C:\Users\zw\Documents\GitHub\FutureCloth\obj\Debug\FutureCloth.g.resources
 C:\Users\zw\Documents\GitHub\FutureCloth\obj\Debug\FutureCloth.Properties.Resources.resources
 C:\Users\zw\Documents\GitHub\FutureCloth\obj\Debug\FutureCloth.csproj.GenerateResource.Cache
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\bin\Debug\FutureCloth.exe.config
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth.exe
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth.pdb
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\bin\Debug\FutureCloth.exe
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\bin\Debug\FutureCloth.pdb
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\bin\Debug\Microsoft.Kinect.dll
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\bin\Debug\Microsoft.Kinect.xml
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth.csprojResolveAssemblyReference.cache
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\MainWindow.baml
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\MainWindow.g.cs
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\App.g.cs
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth_MarkupCompile.cache
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth.g.resources
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth.Properties.Resources.resources
+C:\Users\Ben\Documents\Visual Studio 2013\Projects\FutureCloth\obj\Debug\FutureCloth.csproj.GenerateResource.Cache

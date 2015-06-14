@@ -10,6 +10,7 @@
 
 namespace FutureCloth.Properties
 {
+    using System;
 
 
     /// <summary>
@@ -65,6 +66,77 @@ namespace FutureCloth.Properties
             set
             {
                 resourceCulture = value;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;grammar version=&quot;1.0&quot; xml:lang=&quot;en-US&quot; root=&quot;rootRule&quot; tag-format=&quot;semantics/1.0-literals&quot; xmlns=&quot;http://www.w3.org/2001/06/grammar&quot;&gt;
+        ///  &lt;rule id=&quot;rootRule&quot;&gt;
+        ///    &lt;one-of&gt;
+        ///      &lt;item&gt;
+        ///        &lt;tag&gt;FORWARD&lt;/tag&gt;
+        ///        &lt;one-of&gt;
+        ///          &lt;item&gt; forwards &lt;/item&gt;
+        ///          &lt;item&gt; forward &lt;/item&gt;
+        ///          &lt;item&gt; straight &lt;/item&gt;
+        ///        &lt;/one-of&gt;
+        ///      &lt;/item&gt;
+        ///      &lt;item&gt;
+        ///        &lt;tag&gt;BACKWARD&lt;/tag&gt;
+        ///        &lt;one-of&gt;
+        ///          &lt;item&gt; backward &lt;/item&gt;
+        ///          &lt;item&gt; backwards &lt;/item&gt;
+        ///         [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SpeechGrammar
+        {
+            get
+            {
+                return ResourceManager.GetString("SpeechGrammar", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to write screenshot to {0}.
+        /// </summary>
+        internal static string FailedScreenshotStatusTextFormat
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedScreenshotStatusTextFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No ready Kinect found!.
+        /// </summary>
+        internal static string NoSensorStatusText
+        {
+            get
+            {
+                return ResourceManager.GetString("NoSensorStatusText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Running.
+        /// </summary>
+        internal static string RunningStatusText
+        {
+            get
+            {
+                return ResourceManager.GetString("RunningStatusText", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Saved screenshot to {0}.
+        /// </summary>
+        internal static string SavedScreenshotStatusTextFormat
+        {
+            get
+            {
+                return ResourceManager.GetString("SavedScreenshotStatusTextFormat", resourceCulture);
             }
         }
     }
